@@ -1,0 +1,56 @@
+<!doctype html>
+  <head>
+    <title>Mobile</title>
+
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+      body {
+        background: #3D9970;
+      }
+    </style>
+
+    <script src="socket.io.js"></script>
+    <script>
+      var appId = 'app1';
+      var serverUrl = 'http://192.168.0.182:8090';
+
+      var socket = io(serverUrl);
+
+      socket.on('connect', function() {
+        socket.emit('connect.app', {
+          appId: appId
+        });
+      });
+
+      socket.on('app.connections', function(data) {
+        var container = document.querySelector('#connections');
+        container.innerHTML = '';
+
+        for (var i in data.connections) {
+          var elem = document.createElement('h1');
+          elem.innerHTML = data.connections[i];
+          container.appendChild(elem);
+        }
+      });
+
+      window.addEventListener('deviceorientation', function(event) {
+
+        socket.emit('app.emit', {
+          event: 'deviceorientation',
+          data: {
+            absolute: event.absolute,
+            alpha: event.alpha,
+            beta: event.beta,
+            gamma: event.gamma
+          }
+        });
+
+      });
+    </script>
+
+  </head>
+  <body>
+    <div id="connections"></div>
+  </body>
+</html>

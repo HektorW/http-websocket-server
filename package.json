@@ -1,0 +1,12 @@
+{
+  "name": "http-websocket-server",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "~4.8.7",
+    "socket.io": "~1.0.6",
+    "underscore": "~1.7.0"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
