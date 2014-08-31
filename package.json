@@ -1,12 +1,25 @@
 {
   "name": "http-websocket-server",
-  "version": "0.0.1",
+  "description": "Simple http-server with websocket bindings",
+  "version": "0.1.0",
+  "homepage": "https://github.com/HektorW/http-websocket-server",
+  "author": {
+    "name": "Hektor Wallin",
+    "email": "hektorw@gmail.com"
+  },
   "dependencies": {
     "express": "~4.8.7",
     "socket.io": "~1.0.6",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "mime": "~1.2.11"
   },
   "engines": {
     "node": ">=0.8.0"
+  },
+  "main": "main.js",
+  "keywords": ["http", "server", "websocket"],
+  "preferGlobal": true,
+  "bin": {
+    "http-websocket-server": "main.js"
   }
 }

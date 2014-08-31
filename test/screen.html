@@ -28,14 +28,14 @@
       }
     </style>
 
-    <script src="socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script>
       var appId = 'app1';
-      var serverUrl = 'http://192.168.0.182:8090';
 
-      var socket = io(serverUrl);
+      var socket = io();
 
       socket.on('connect', function() {
+        console.log('connected');
         socket.emit('connect.app', {
           appId: appId
         });
