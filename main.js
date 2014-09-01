@@ -6,7 +6,7 @@ var io = require('socket.io')(server);
 var Router = require('./websocket-router/router.js');
 
 io.on('connection', function(socket) {
-  socket.on('connect.app', function(data) {
+  socket.on('app.connect', function(data) {
     Router.addConnection(socket, data.appId);
   });
 });
