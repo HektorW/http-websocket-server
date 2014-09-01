@@ -48,6 +48,10 @@ App.prototype._setupSocket = function(socket) {
     }
   });
 
+  socket.emit('app.connected', {
+    appId: this.id
+  });
+  app.emitConnections();
   console.log('sockets in app', _.map(app.connections, function() { return arguments[0].id; }));
 };
 
