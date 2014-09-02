@@ -41,20 +41,7 @@ app.get('*', function(req, res) {
     if (stat.isFile()) {
       // File
 
-      fs.readFile(localpath, function(err, data) {
-        if (err) {
-          console.log(err);
-          res.send(err);
-          return;
-        }
-
-        var mimetype = mime.lookup(localpath);
-
-        console.log('mime ', mimetype, localpath);
-
-        res.type(mimetype);
-        res.send(data);
-      });
+      sendFile(res, localpath);
 
     } else if (stat.isDirectory()) {
       // Directory
@@ -66,23 +53,48 @@ app.get('*', function(req, res) {
           return;
         }
 
-        var html = dirTemplate({
-          name: path.basename(url),
-          url: url,
-          files: _.map(files, function(file) {
-            return {
-              url: path.join(url, file),
-              name: file
-            }
-          })
+        var indexFile = _.find(files, function(file) {
+          return file.toLowerCase() === 'index.html' || file.toLowerCase() === 'index.htm';
         });
+        if (indexFile) {
+          sendFile(res, path.join(localpath, indexFile));
+        } else {
+          var html = dirTemplate({
+            name: path.basename(url),
+            url: url,
+            files: _.map(files, function(file) {
+              return {
+                url: path.join(url, file),
+                name: file
+              }
+            })
+          });
 
-        res.type('text/html');
-        res.send(html);
+          res.type('text/html');
+          res.send(html);
+        }
+
       });
     }
   });
 });
+
+function sendFile(response, path) {
+  fs.readFile(path, function(err, data) {
+    if (err) {
+      console.log(err);
+      response.send(err);
+      return;
+    }
+
+    var mimetype = mime.lookup(path);
+
+    // console.log('mime ', mimetype, path);
+
+    response.type(mimetype);
+    response.send(data);
+  });
+}
 
 
 
