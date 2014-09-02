@@ -26,11 +26,13 @@ App.prototype._setupSocket = function(socket) {
     var event = data.event;
     var eventData = data.data;
     var to = data.to;
-    
+
     var recipients = to ? [app.connections[to]] : app.getOthers(socket);
 
     _.each(recipients, function(recipient) {
-      recipient.emit(event, eventData);
+      if (recipient) {
+        recipient.emit(event, eventData);
+      }
     })
   });
 
@@ -52,7 +54,7 @@ App.prototype._setupSocket = function(socket) {
     appId: this.id
   });
   app.emitConnections();
-  console.log('sockets in app', _.map(app.connections, function() { return arguments[0].id; }));
+  // console.log('sockets in app', _.map(app.connections, function() { return arguments[0].id; }));
 };
 
 App.prototype.emitConnections = function(socket) {
