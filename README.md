@@ -18,8 +18,9 @@ http-websocket-server
 ```
 
 ### Client
-Connecting to an application with id from the client.
+Connect to an application from the client by specifying the applications id.
 ```javascript
+// socket.io library is served by default from the server
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var appId = 'myApp';
@@ -72,7 +73,7 @@ socket.on('app.connections', function(data) {
       event: 'special hello',
       to: firstClient.id,
       data: {
-        messag: 'A special hello to you from me'
+        message: 'A special hello to you from me'
       }
     });
   }
