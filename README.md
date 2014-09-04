@@ -78,4 +78,8 @@ socket.on('app.connections', function(data) {
     });
   }
 });
+
+socket.on('special.hello', function(data) {
+  console.log('A special message received: ' + data.message);
+});
 ```
