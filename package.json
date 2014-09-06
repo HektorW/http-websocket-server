@@ -15,13 +15,19 @@
     "express": "~4.8.7",
     "socket.io": "~1.0.6",
     "underscore": "~1.7.0",
-    "mime": "~1.2.11"
+    "mime": "~1.2.11",
+    "minimist": "~1.1.0",
+    "colors": "~0.6.2"
   },
   "engines": {
     "node": ">=0.8.0"
   },
   "main": "main.js",
-  "keywords": ["http", "server", "websocket"],
+  "keywords": [
+    "http",
+    "server",
+    "websocket"
+  ],
   "preferGlobal": true,
   "bin": {
     "http-websocket-server": "main.js"

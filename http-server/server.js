@@ -1,12 +1,14 @@
 
-var _ = require('underscore');
-var fs = require('fs');
-var path = require('path');
-var mime = require('mime');
+var colors = require('colors'),
+    _ = require('underscore'),
+    fs = require('fs'),
+    path = require('path'),
+    mime = require('mime'),
+    app = require('express')(),
+    server = require('http').Server(app),
+    argv = require('minimist')(process.argv.slice(2));
 
-var app = require('express')();
-var server = require('http').Server(app);
-
+var port = parseInt(argv.port, 10) || 8080;
 
 var dirTemplate = _.template((function() {/*
 <!doctype html>
@@ -89,8 +91,6 @@ function sendFile(response, path) {
 
     var mimetype = mime.lookup(path);
 
-    // console.log('mime ', mimetype, path);
-
     response.type(mimetype);
     response.send(data);
   });
@@ -98,8 +98,7 @@ function sendFile(response, path) {
 
 
 
-var port = 8080;
+console.log(('started listening on port: ' + port).yellow);
 server.listen(port);
-
 
 module.exports = server;
