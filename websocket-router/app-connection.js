@@ -50,7 +50,7 @@ App.prototype._setupSocket = function(socket) {
     }
   });
 
-  socket.emit('app.connected', {
+  socket.emit('app.connect', {
     appId: this.id
   });
   app.emitConnections();
