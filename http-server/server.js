@@ -14,7 +14,14 @@ var dirTemplate = _.template((function() {/*
 <!doctype html>
   <head>
     <title><%= name %></title>
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      body{color:#111;}
+      a{color:#0074D9;transition:color 0.2s;}
+      a:hover{color:#7FDBFF;}
+      a:visited{color:#85144B;}
+      li{color:#111;}
+    </style>
   </head>
 
   <body>
@@ -27,6 +34,10 @@ var dirTemplate = _.template((function() {/*
   </body>
 </html>
 */}.toString().split('\n').slice(1, -1).join('\n')));
+
+
+
+
 
 
 app.get('*', function(req, res) {

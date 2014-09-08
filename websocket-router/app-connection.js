@@ -54,7 +54,6 @@ App.prototype._setupSocket = function(socket) {
     appId: this.id
   });
   app.emitConnections();
-  // console.log('sockets in app', _.map(app.connections, function() { return arguments[0].id; }));
 };
 
 App.prototype.emitConnections = function(socket) {
