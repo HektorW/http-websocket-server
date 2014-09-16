@@ -1,5 +1,6 @@
 
 var colors = require('colors'),
+    errorcodes = require('./errorcodes.js'),
     _ = require('underscore'),
     fs = require('fs'),
     path = require('path'),
@@ -53,57 +54,65 @@ app.get('*', function(req, res) {
 
     if (stat.isFile()) {
       // File
-
       sendFile(res, localpath);
 
     } else if (stat.isDirectory()) {
+
       // Directory
+      sendDirectory(res, localpath, url);
 
-      fs.readdir(localpath, function(err, files) {
-        if (err) {
-          console.log(err);
-          res.send(err);
-          return;
-        }
+    } else {
 
-        var indexFile = _.find(files, function(file) {
-          return file.toLowerCase() === 'index.html' || file.toLowerCase() === 'index.htm';
-        });
-        if (indexFile) {
-          sendFile(res, path.join(localpath, indexFile));
-        } else {
-          var html = dirTemplate({
-            name: path.basename(url),
-            url: url,
-            files: _.map(files, function(file) {
-              return {
-                url: path.join(url, file),
-                name: file
-              }
-            })
-          });
+      // Send server error
 
-          res.type('text/html');
-          res.send(html);
-        }
-
-      });
     }
   });
 });
 
-function sendFile(response, path) {
-  fs.readFile(path, function(err, data) {
+function sendFile(response, localpath) {
+  fs.readFile(localpath, function(err, data) {
     if (err) {
       console.log(err);
       response.send(err);
       return;
     }
 
-    var mimetype = mime.lookup(path);
+    var mimetype = mime.lookup(localpath);
 
     response.type(mimetype);
     response.send(data);
+  });
+}
+
+function sendDirectory(response, localpath, url) {
+  fs.readdir(localpath, function(err, files) {
+    if (err) {
+      console.log(err);
+      res.send(err);
+      return;
+    }
+
+    var indexFile = _.find(files, function(file) {
+      return file.toLowerCase() === 'index.html' || file.toLowerCase() === 'index.htm';
+    });
+    if (indexFile) {
+      sendFile(res, path.join(localpath, indexFile));
+    } else {
+      var html = dirTemplate({
+        name: path.basename(url),
+        url: url,
+        files: _.map(files, function(file) {
+          return {
+            url: path.join(url, file),
+            name: file
+          }
+        })
+      });
+
+      res.type('text/html');
+      res.send(html);
+    }
+
   });
 }
 
