@@ -47,8 +47,7 @@ app.get('*', function(req, res) {
 
   fs.stat(localpath, function(err, stat) {
     if (err) {
-      console.log(err);
-      res.send(err);
+      sendError(res, err);
       return;
     }
 
@@ -72,8 +71,7 @@ app.get('*', function(req, res) {
 function sendFile(response, localpath) {
   fs.readFile(localpath, function(err, data) {
     if (err) {
-      console.log(err);
-      response.send(err);
+      sendError(response, err);
       return;
     }
 
@@ -87,8 +85,7 @@ function sendFile(response, localpath) {
 function sendDirectory(response, localpath, url) {
   fs.readdir(localpath, function(err, files) {
     if (err) {
-      console.log(err);
-      res.send(err);
+      sendError(response, err);
       return;
     }
 
@@ -96,7 +93,7 @@ function sendDirectory(response, localpath, url) {
       return file.toLowerCase() === 'index.html' || file.toLowerCase() === 'index.htm';
     });
     if (indexFile) {
-      sendFile(res, path.join(localpath, indexFile));
+      sendFile(response, path.join(localpath, indexFile));
     } else {
       var html = dirTemplate({
         name: path.basename(url),
@@ -109,11 +106,16 @@ function sendDirectory(response, localpath, url) {
         })
       });
 
-      res.type('text/html');
-      res.send(html);
+      response.type('text/html');
+      response.send(html);
     }
 
   });
+}
+
+function sendError(response, error) {
+  var httpError = errorcodes.getError(error.errno);
+  response.status(httpError.code).send(httpError.description);
 }
 
 
