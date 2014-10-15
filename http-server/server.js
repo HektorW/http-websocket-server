@@ -102,7 +102,7 @@ function sendDirectory(response, localpath, url) {
           return {
             url: path.join(url, file),
             name: file
-          }
+          };
         })
       });
 

@@ -20,4 +20,4 @@ var ErrorCodes = {
   }
 };
 
-module.export = ErrorCodes;
+module.exports = ErrorCodes;
