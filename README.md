@@ -14,8 +14,9 @@ npm install -g http-websocket-server
 ### Start server
 Start a server with:
 ```
-http-websocket-server
+http-websocket-server [server-root] [--port=port]
 ```
+
 
 ### Client
 Connect to an application from the client by specifying the applications id.
