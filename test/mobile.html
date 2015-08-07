@@ -18,7 +18,7 @@
       var socket = io(serverUrl);
 
       socket.on('connect', function() {
-        socket.emit('connect.app', {
+        socket.emit('app.connect', {
           appId: appId
         });
       });
@@ -29,7 +29,7 @@
 
         for (var i in data.connections) {
           var elem = document.createElement('h1');
-          elem.innerHTML = data.connections[i];
+          elem.innerHTML = data.connections[i].id;
           container.appendChild(elem);
         }
       });
